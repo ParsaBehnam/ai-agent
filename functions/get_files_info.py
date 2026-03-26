@@ -11,10 +11,11 @@ def get_files_info(working_directory, directory="."):
             return f'Error: "{directory}" is not a directory'
         
         items_record_list = []
-        for item in os.listdir(target_dir):
-            full_path = os.path.join(target_dir, item)
-            items_record_list.append(f'- {item}: file_size={os.path.getsize(full_path)}, is_dir={os.path.isdir(full_path)}')
-        return '\n'.join(items_record_list)
+        for filename in os.listdir(target_dir):
+            filepath = os.path.join(target_dir, filename)
+            items_record_list.append(f'- {filename}: file_size={os.path.getsize(filepath)}, is_dir={os.path.isdir(filepath)}')
+        return '\n'.join(sorted(items_record_list, reverse= False))
+    
     except Exception as e:
         return f"Error: {e}"
         
