@@ -9,8 +9,11 @@ def main():
         raise RuntimeError("could not connect to the api")
 
     client = genai.Client(api_key = api_key)
-    content = client.models.generate_content(model='gemini-2.5-flash', contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum.")
-    print(content.text)
+    response = client.models.generate_content(model='gemini-2.5-flash', contents="Why is Boot.dev such a great place to learn backend development? Use one paragraph maximum.")
+    if response.usage_metadata == None:
+        raise RuntimeError("failed api request")
+    print(f'Prompt tokens: {response.usage_metadata.prompt_token_count}\nResponse tokens: {response.usage_metadata.candidates_token_count} ')
+    print(response.text)
 
 
 if __name__ == "__main__":
